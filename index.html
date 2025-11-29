@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base target="_self">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMARTGARDEN - Agricultural Monitoring App</title>
+  <meta name="description" content="Monitor your plants' health and environmental conditions with SMARTGARDEN">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#2E7D32",
+            secondary: "#7CB342",
+            accent: "#FFA000",
+            neutral: "#424242",
+            info: "#0288D1",
+            warning: "#F57C00",
+            danger: "#D32F2F",
+            success: "#388E3C"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <!-- App Container -->
+  <div class="w-full max-w-md md:max-w-2xl lg:max-w-5xl mx-auto bg-white min-h-screen shadow-lg flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-primary text-white p-4 shadow-md">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <i class="fas fa-leaf text-2xl mr-2"></i>
+          <h1 class="text-lg md:text-2xl lg:text-3xl font-bold">SMARTGARDEN</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="relative" id="alertsBtn">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <button id="userBtn">
+            <i class="fas fa-user-circle text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-4">
+
+      <!-- 🌱 Dashboard View -->
+      <div id="dashboardView">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-neutral mb-4">Plant Health Status</h2>
+          <div class="flex justify-center">
+            <div class="gauge">
+              <div class="gauge-needle" id="healthNeedle"></div>
+              <div class="gauge-center"></div>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <p class="text-lg font-medium" id="healthStatus">Good Health</p>
+            <p class="text-sm text-gray-600">Last updated: <span id="lastUpdate">Just now</span></p>
+          </div>
+        </div>
+
+        <!-- Sensor Data -->
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-neutral mb-4">Sensor Data</h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+            <!-- Soil Moisture -->
+            <div class="sensor-card bg-white p-4 rounded-lg shadow border border-gray-100">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-tint text-info text-2xl mr-2"></i>
+                <h3 class="font-medium">Soil Moisture</h3>
+              </div>
+              <p class="text-2xl font-bold" id="moistureValue">42%</p>
+              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                <div class="bg-info h-2.5 rounded-full" style="width: 42%"></div>
+              </div>
+            </div>
+
+            <!-- Humidity -->
+            <div class="sensor-card bg-white p-4 rounded-lg shadow border border-gray-100">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-cloud-rain text-secondary text-2xl mr-2"></i>
+                <h3 class="font-medium">Humidity</h3>
+              </div>
+              <p class="text-2xl font-bold" id="humidityValue">65%</p>
+              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                <div class="bg-secondary h-2.5 rounded-full" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <!-- Temperature -->
+            <div class="sensor-card bg-white p-4 rounded-lg shadow border border-gray-100">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-thermometer-half text-danger text-2xl mr-2"></i>
+                <h3 class="font-medium">Temperature</h3>
+              </div>
+              <p class="text-2xl font-bold" id="temperatureValue">24°C</p>
+              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                <div class="bg-danger h-2.5 rounded-full" style="width: 60%"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mb-6 quick-actions">
+          <h2 class="text-lg font-semibold text-neutral mb-3">Quick Actions</h2>
+          <div class="grid grid-cols-2 gap-2">
+            <!--plant picking-->
+            <button class="bg-success hover:bg-green-700 text-white py-2 rounded-lg font-medium flex items-center justify-center text-sm">
+              <i class="fas fa-seedling mr-2"></i> Plant Picking
+            </button>
+            
+<!--MODIFIED-->
+            <!--chat forum-->
+      <button   class="bg-info hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center text-sm">
+  <i class="fas fa-comments mr-2"></i> Chat Forum
+</button>
+
+<div id="chatForumView" class="hidden">
+  <h2 class="text-xl font-semibold text-neutral mb-4">Chat Forum</h2>
+
+  <div class="bg-white rounded-lg shadow p-4 h-[600px]">
+    <iframe
+      src="https://console.dialogflow.com/api-client/demo/embedded/29533bd7-a060-4f14-a788-2336d9a50002"
+      class="w-full h-full rounded-lg border border-gray-200"
+      allow="microphone;">
+    </iframe>
+  </div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 📊 Trends View -->
+      <div id="trendsView" class="hidden">
+        <h2 class="text-xl font-semibold text-neutral mb-4">Trends & Analytics</h2>
+        <div class="bg-white p-4 rounded-lg shadow mb-4">
+          <h3 class="font-medium mb-2">Last 7 Days</h3>
+          <div class="chart-container flex items-end justify-between px-4" id="trendChart"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-medium mb-2">Optimal Ranges</h3>
+            <ul class="text-sm">
+              <li class="mb-1">Moisture: 40–60%</li>
+              <li class="mb-1">pH: 6.0–7.0</li>
+              <li class="mb-1">Humidity: 50–70%</li>
+              <li>Temperature: 18–26°C</li>
+            </ul>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-medium mb-2">Recommendations</h3>
+            <ul class="text-sm">
+              <li class="mb-1">✓ Water levels optimal</li>
+              <li class="mb-1">✓ pH slightly high</li>
+              <li class="mb-1">✓ Humidity normal</li>
+              <li>✓ Temperature ideal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🚨 Alerts View -->
+      <div id="alertsView" class="hidden">
+        <h2 class="text-lg md:text-xl lg:text-2xl font-semibold text-neutral mb-4">Alerts & Notifications</h2>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-4">
+          <div class="bg-warning text-white px-4 py-2 font-medium">
+            <i class="fas fa-exclamation-triangle mr-2"></i> Warning
+          </div>
+          <div class="p-4">
+            <p class="font-medium">pH level slightly elevated</p>
+            <p class="text-sm text-gray-600">Consider testing soil acidity</p>
+            <p class="text-xs text-gray-500 mt-2">2 hours ago</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-4">
+          <div class="bg-info text-white px-4 py-2 font-medium">
+            <i class="fas fa-info-circle mr-2"></i> Info
+          </div>
+          <div class="p-4">
+            <p class="font-medium">Watering cycle completed</p>
+            <p class="text-sm text-gray-600">System watered plants for 5 minutes</p>
+            <p class="text-xs text-gray-500 mt-2">5 hours ago</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <div class="bg-success text-white px-4 py-2 font-medium">
+            <i class="fas fa-check-circle mr-2"></i> Success
+          </div>
+          <div class="p-4">
+            <p class="font-medium">New plant added successfully</p>
+            <p class="text-sm text-gray-600">Tomato plant registered in system</p>
+            <p class="text-xs text-gray-500 mt-2">Yesterday</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⚙️ Settings View -->
+      <div id="settingsView" class="hidden">
+        <h2 class="text-xl font-semibold text-neutral mb-4">Settings</h2>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-4">
+          <div class="p-4 border-b border-gray-100">
+            <p class="font-medium">Account Settings</p>
+          </div>
+          <div class="p-4 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+              <input type="text" class="w-full p-2 border border-gray-300 rounded" value="gardener123">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input type="email" class="w-full p-2 border border-gray-300 rounded" value="user@example.com">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Notification Preferences</label>
+              <div class="mt-2">
+                <label class="inline-flex items-center">
+                  <input type="checkbox" class="rounded border-gray-300 text-primary" checked>
+                  <span class="ml-2">Email alerts</span>
+                </label>
+                <label class="inline-flex items-center ml-6">
+                  <input type="checkbox" class="rounded border-gray-300 text-primary" checked>
+                  <span class="ml-2">Push notifications</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-4">
+          <div class="p-4 border-b border-gray-100">
+            <p class="font-medium">Garden Settings</p>
+          </div>
+          <div class="p-4 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Plant Type</label>
+              <select class="w-full p-2 border border-gray-300 rounded">
+                <option>Tomatoes</option>
+                <option>Lettuce</option>
+                <option>Herbs</option>
+                <option>Flowers</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Watering Schedule</label>
+              <select class="w-full p-2 border border-gray-300 rounded">
+                <option>Every 2 days</option>
+                <option>Daily</option>
+                <option>Twice daily</option>
+                <option>Manual</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button class="w-full bg-primary hover:bg-green-800 text-white py-3 rounded-lg font-medium">
+          Save Settings
+        </button>
+      </div>
+
+      <!-- 👤 User Profile View -->
+      <div id="userView" class="hidden">
+        <h2 class="text-xl font-semibold text-neutral mb-4">User Profile</h2>
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+          <div class="p-4 flex items-center">
+            <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+              <i class="fas fa-user text-3xl text-gray-400"></i>
+            </div>
+            <div>
+              <p class="font-medium">Gardener User</p>
+              <p class="text-sm text-gray-600">Premium Member</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-medium mb-2">Account Details</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Username:</span>
+                <span class="font-medium">gardener123</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Email:</span>
+                <span class="font-medium">user@example.com</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Member since:</span>
+                <span class="font-medium">Jan 15, 2023</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="font-medium mb-2">Garden Stats</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Plants monitored:</span>
+                <span class="font-medium">12</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Active sensors:</span>
+                <span class="font-medium">4</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Last harvest:</span>
+                <span class="font-medium">14 days ago</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="w-full bg-primary hover:bg-green-800 text-white py-3 rounded-lg font-medium">
+            Edit Profile
+          </button>
+        </div>
+      </div>
+
+<!--MODIFICATIONS ABOUT THE CHAT FORUM-->
+      <!-- 💬 Chat Forum View -->
+<div id="chatForumView" class="hidden">
+  <h2 class="text-xl font-semibold text-neutral mb-4">Chat Forum</h2>
+
+  <div class="bg-white rounded-lg shadow p-4 h-[600px]">
+    <iframe
+      src="https://console.dialogflow.com/api-client/demo/embedded/29533bd7-a060-4f14-a788-2336d9a50002"
+      class="w-full h-full rounded-lg border border-gray-200"
+      allow="microphone;">
+    </iframe>
+  </div>
+</div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bg-white border-t border-gray-200 p-2 fixed bottom-0 w-full md:static md:border-t-0">
+      <div class="flex justify-evenly w-full">
+        <button class="nav-btn flex flex-col items-center p-2 text-primary" data-view="dashboardView">
+          <i class="fas fa-home text-xl"></i>
+          <span class="text-xs mt-1">Home</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center p-2 text-gray-500" data-view="trendsView">
+          <i class="fas fa-chart-line text-xl"></i>
+          <span class="text-xs mt-1">Trends</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center p-2 text-gray-500 relative" data-view="alertsView">
+          <i class="fas fa-bell text-xl"></i>
+          <span class="text-xs mt-1">Alerts</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center p-2 text-gray-500" data-view="settingsView">
+          <i class="fas fa-cog text-xl"></i>
+          <span class="text-xs mt-1">Settings</span>
+        </button>
+      </div>
+    </nav>
+
+  </div>
+
+  
+
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>

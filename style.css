@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding:0;
+}
+
+.gauge {
+    width: min(40vw, 200px);
+    height: min(40vw, 200px);
+    margin: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        #DCE775 0deg,      /* Light yellow-green – Poor health */
+        #81C784 120deg,    /* Medium natural green – Moderate health */
+        #1B5E20 240deg,    /* Deep forest green – Excellent health */
+        #DCE775 360deg     /* Wrap back to start color */
+    );
+    mask: radial-gradient(white 55%, transparent 56%);
+    -webkit-mask: radial-gradient(white 55%, transparent 56%);
+    position: relative;
+}
+
+
+
+.gauge-needle {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 4px;
+    height: 45%;
+    background: #424242;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 1s ease;
+    border-radius: 4px 4px 0 0;
+}
+
+.gauge-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: #424242;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notification-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: #D32F2F;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.sensor-card {
+    transition: all 0.3s ease;
+    padding: 0.75rem;
+}
+
+.grid {
+    gap: 0.75rem; 
+}
+
+.sensor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    height: 250px;
+    position: relative;
+}
+
+.chart-bar {
+    width: 30px;
+    background: linear-gradient(to top, #7CB342, #2E7D32);
+    border-radius: 4px 4px 0 0;
+    position: absolute;
+    bottom: 0;
+    transition: height 0.5s ease;
+}
+/*dashboard view*/
+#dashboardView > div{
+    margin-bottom: 1.5rem;
+}
+
+main{
+    padding: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+
+h2{
+    margin-bottom: 0.5rem;
+}
+
+.text-center.mt-4{
+    margin-top: 0.5rem;
+}
+
+.quick-actions button{
+    padding: 0.5rem 0.75rem;
+}
